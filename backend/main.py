@@ -21,7 +21,7 @@ models.Base.metadata.create_all(bind=engine)
 # Inicicialização do FastAPI
 app = FastAPI(title="Educational Material API")
 
-
+# Checando PR de test-branch
 
 # Config modelo IA
 gemini_api_key = os.getenv("GEMINI_API_KEY")
