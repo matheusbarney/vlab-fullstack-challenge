@@ -1,0 +1,7 @@
+# Variaveis de ambiente
+.env
+
+# Python
+__pycache__/
+venv/
+.pytest_cache/
