@@ -1,11 +1,10 @@
-import os
-from dotenv import load_dotenv
+import config
 
 from typing import List
 from fastapi import FastAPI, HTTPException, Depends
 
 from database import engine, get_db
-from models import Material
+from models import Material, MaterialTag
 
 from sqlalchemy.orm import Session
 
@@ -16,13 +15,11 @@ import models
 
 models.Base.metadata.create_all(bind=engine)
 
-load_dotenv()
-
 # Inicicialização do FastAPI
 app = FastAPI(title="Educational Material API")
 
 # Config modelo IA
-gemini_api_key = os.getenv("GEMINI_API_KEY")
+gemini_api_key = config.GEMINI_API_KEY
 if not gemini_api_key:
     raise ValueError("GEMINI_API_KEY não foi definido nas variáveis de ambiente.")
 
@@ -40,7 +37,12 @@ def read_root():
 # Create
 @app.post("/materials/", response_model=MaterialResponse)
 def create_material(material: MaterialCreate, db: Session = Depends(get_db)):
-    new_material = Material(**material.dict())
+    data = material.dict()
+    tags = data.pop("tags", [])
+
+    new_material = Material(**data)
+    new_material.tags = [MaterialTag(name=tag) for tag in tags]
+
     db.add(new_material)
     db.commit()
     db.refresh(new_material)
@@ -64,8 +66,17 @@ def update_material(
     db_material = db.query(Material).filter(Material.id == material_id).first()
     if not db_material:
         raise HTTPException(status_code=404, detail="Material não existe")
-    for key, value in material.dict().items():
+
+    data = material.dict()
+    tags = data.pop("tags", [])
+    data["url"] = str(data["url"])
+
+    for key, value in data.items():
         setattr(db_material, key, value)
+
+    # Substitui as tags completamente
+    db_material.tags = [MaterialTag(name=tag) for tag in tags]
+
     db.commit()
     db.refresh(db_material)
     return db_material
