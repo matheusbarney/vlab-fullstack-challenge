@@ -3,7 +3,8 @@ from typing import Literal, Optional, List, Any
 
 
 class AIRequest(BaseModel):
-    prompt: str
+    prompt_title: str
+    prompt_type: Literal["Vídeo", "PDF", "Link"]
 
 
 class AIResponse(BaseModel):

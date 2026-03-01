@@ -23,9 +23,7 @@ gemini_api_key = config.GEMINI_API_KEY
 if not gemini_api_key:
     raise ValueError("GEMINI_API_KEY não foi definido nas variáveis de ambiente.")
 
-ai_platform = GeminiFlash(
-    api_key=gemini_api_key, system_prompt="Você é uma assistente útil."
-)
+ai_platform = GeminiFlash(api_key=gemini_api_key)
 
 
 # Endpoints API
@@ -110,5 +108,7 @@ def get_all_material(db: Session = Depends(get_db)):
 
 @app.post("/ai", response_model=AIResponse)
 async def use_ai(request: AIRequest):
-    response_text = ai_platform.chat(request.prompt)
+    response_text = ai_platform.chat(
+        prompt_title=request.prompt_title, prompt_type=request.prompt_type
+    )
     return AIResponse(response=response_text)
