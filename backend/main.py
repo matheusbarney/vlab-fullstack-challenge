@@ -2,6 +2,7 @@ import config
 
 from typing import List
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
 
 from database import engine, get_db
 from models import Material, MaterialTag
@@ -17,6 +18,15 @@ models.Base.metadata.create_all(bind=engine)
 
 # Inicicialização do FastAPI
 app = FastAPI(title="Educational Material API")
+
+# CORS com Frontend React
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Config modelo IA
 gemini_api_key = config.GEMINI_API_KEY
