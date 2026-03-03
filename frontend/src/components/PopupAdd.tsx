@@ -9,6 +9,7 @@ import { FormFieldTags } from './molecules/FormFieldTags';
 import Button from './atoms/Button';
 import { useState } from 'react';
 import { useMaterials } from '../hooks/useMaterials';
+import { toast } from 'react-toastify';
 
 const schema = z.object({
   title: z.string().min(1, "Title is required."),
@@ -28,7 +29,7 @@ type PopupAddProps = {
 
 export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps) {
   const { 
-    register, handleSubmit, setError, reset, setValue, control, formState: { errors, isSubmitting } 
+    register, handleSubmit, reset, setValue, control, formState: { errors, isSubmitting } 
   } = useForm<FormFields>({ 
     resolver: zodResolver(schema),
     defaultValues: { tags: [] }, // importante!
@@ -51,7 +52,7 @@ export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps
         setValue('tags', content.tags, { shouldValidate: true });
       }
     } catch {
-      setError("root", { message: 'Failed to generate AI content.' });
+      toast.error('Failed to generate AI content.');
     } finally {
       setIsGenerating(false);
     }
@@ -64,7 +65,7 @@ export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps
       reset();           // limpa o form após sucesso
       setAddIsOpen(false); // fecha o popup após sucesso
     } catch (error) {
-      setError("root", { message: 'Something went wrong.' });
+      toast.error('Failed to add material.');
     }
   };
 
@@ -105,9 +106,6 @@ export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps
                 error={errors.tags?.message}
             />
 
-            {errors.root && (
-              <p className="text-red-500 text-sm">{errors.root.message}</p>
-            )}
 
             <div className="flex justify-end gap-3 pt-4">
               <button

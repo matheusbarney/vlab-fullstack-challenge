@@ -1,5 +1,5 @@
 
-
+import { RotateLoader } from 'react-spinners';
 
 interface ButtonProps {
     type?: "button" | "submit" | "reset";
@@ -16,7 +16,7 @@ function Button({ type, icon, mainText, showText, isSubmitting, onClick }: Butto
             disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto ">
       {showText && isSubmitting ? (
         <span className="text-neutral-100">
-          Loading...
+          <RotateLoader color="#363636" />
         </span>
       ) : (
         <div className="flex justify-center items-center gap-2 text-neutral-100">

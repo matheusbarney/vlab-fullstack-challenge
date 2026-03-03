@@ -8,6 +8,7 @@ import { FormField } from './molecules/FormField';
 import { FormSelect } from './molecules/FormSelect';
 import { FormFieldTags } from './molecules/FormFieldTags';
 import Button from './atoms/Button';
+import { toast } from 'react-toastify';
 
 const schema = z.object({
   title: z.string().min(1, "Title is required."),
@@ -27,7 +28,7 @@ type PopupEditProps = {
 
 export function PopupEdit({ material, onClose, editMaterial }: PopupEditProps) {
   const { 
-    register, handleSubmit, setError, reset, setValue, control, formState: { errors, isSubmitting } 
+    register, handleSubmit, reset, setValue, control, formState: { errors, isSubmitting } 
   } = useForm<FormFields>({ 
     resolver: zodResolver(schema),
     defaultValues: { tags: [] }, // importante!
@@ -46,7 +47,7 @@ export function PopupEdit({ material, onClose, editMaterial }: PopupEditProps) {
       reset();
       onClose();
     } catch (error) {
-      setError("root", { message: 'Something went wrong.' });
+      toast.error('Something went wrong.');
     }
   };
 
@@ -80,10 +81,6 @@ export function PopupEdit({ material, onClose, editMaterial }: PopupEditProps) {
                 label="Tags:"
                 error={errors.tags?.message}
             />
-
-            {errors.root && (
-              <p className="text-red-500 text-sm">{errors.root.message}</p>
-            )}
 
             <div className="flex justify-end gap-3 pt-4">
               <button

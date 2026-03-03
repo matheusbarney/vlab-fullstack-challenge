@@ -5,6 +5,12 @@ export function MaterialItems({ currentItems, onDelete, onEdit }: {
   onDelete: (id: string) => void;
   onEdit: (material: Material) => void;
 }) {
+
+  function truncate(text: string, limit = 150) {
+    if (!text || text.length <= limit) return text;
+    return text.slice(0, limit).trimEnd() + "…";
+  }
+
   return (
     <>
       {currentItems && currentItems.map((material) => (
@@ -12,7 +18,7 @@ export function MaterialItems({ currentItems, onDelete, onEdit }: {
           <div>
             <p className="font-bold">{material.title}</p>
             <p className="italic">{material.type}</p>
-            <p>{material.description}</p>
+            <p className="font-size-sm">{truncate(material.description)}</p>
             <p>URL: {material.url}</p>
             <p>{material.tags?.join(', ')}</p>
           </div>
