@@ -22,7 +22,7 @@ export function FormField({
 
   
   return (
-    <div className="w-full py-4">
+    <div className="w-full py-1">
       <p className="pb-1 text-xl text-gray-800">{label}</p>
       <Input 
         register={register} 

@@ -23,7 +23,7 @@ export function PaginatedMaterials({ materials, onDelete, onEdit }: {
 
   return (
     <>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 gap-2 md:gap-4 py-4 w-xl">
+      <ul className="grid grid-cols-1 gap-2 md:gap-4 py-6 w-160 overflow-auto">
         <MaterialItems currentItems={currentItems} onDelete={onDelete} onEdit={onEdit}/>
       </ul>
       <ReactPaginate
@@ -34,7 +34,7 @@ export function PaginatedMaterials({ materials, onDelete, onEdit }: {
         pageCount={pageCount}
         previousLabel="< Anterior"
         renderOnZeroPageCount={null}
-        className="flex gap-2 py-4"
+        className="flex gap-2 py-4 justify-center"
         pageClassName="border rounded cursor-pointer hover:bg-slate-300 py-3"
         activeClassName="bg-slate-400 font-bold py-3"
         previousClassName="border rounded cursor-pointer hover:bg-slate-300 py-3"

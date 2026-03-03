@@ -10,6 +10,7 @@ import Button from './atoms/Button';
 import { useState } from 'react';
 import { useMaterials } from '../hooks/useMaterials';
 import { toast } from 'react-toastify';
+import { RiseLoader } from 'react-spinners';
 
 const schema = z.object({
   title: z.string().min(1, "Title is required."),
@@ -74,32 +75,46 @@ export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps
     <Dialog open={addIsOpen} onClose={() => setAddIsOpen(false)} className="relative z-50">
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-slate-900/70">
 
-        <DialogPanel className="max-w-2xl w-full space-y-4 border border-6 border-slate-200 rounded-4xl bg-white p-6 text-slate-900">
+        <DialogPanel className="max-w-xl w-full space-y-4 border border-6 border-slate-200 rounded-4xl bg-white p-6 text-slate-900">
           <div className="flex items-center justify-between">
             <DialogTitle className="font-bold text-2xl">Adicionar Material Educacional</DialogTitle>
-            <button 
-              onClick={handleAIHelp} 
-              disabled={!canUseAI || isGenerating}
-            >
-              {isGenerating ? "Gerando..." : "AI Help"}
-            </button>
+            <div className="flex flex-col items-center gap-1">
+              <button 
+                onClick={handleAIHelp} 
+                disabled={!canUseAI || isGenerating}
+                className={`w-50 px-4 py-2 flex justify-center rounded ${canUseAI ? 
+                  !isGenerating ? 'bg-gradient-to-tl from-purple-600 to-blue-400 text-white hover:bg-blue-600': 'bg-violet-800 cursor-not-allowed' 
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              >
+                {!canUseAI ? 
+                  <><span className="inline-block size-6 mr-1">{sparkleAI()}</span></>
+                  : isGenerating ? (
+                    <span className="">
+                      <RiseLoader color="#ffffff" size={10} />
+                    </span>
+                  ) : (
+                    <><span className="inline-block size-6 mr-1">{sparkleAI()}</span> AI Help</>
+                  )}
+              </button>
+              <span className="text-[10.5px] text-gray-500">Preencha título e tipo, que a IA faz o resto!</span>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit, (errs) => console.log("Validation errors:", errs))}>
-            <FormField register={register} errors={errors} name="title" label="Title:" placeholder="Enter title" />
+            <FormField register={register} errors={errors} name="title" label="Título:" placeholder="Digite título" />
             <FormSelect
               register={register}
               errors={errors}
               name="type"
-              label="Type:"
+              label="Tipo:"
               options={[
                 { value: "Vídeo", label: "Vídeo" },
                 { value: "PDF", label: "PDF" },
                 { value: "Link", label: "Link" },
               ]}
             />
-            <FormField register={register} errors={errors} name="description" label="Description:" placeholder="Enter description" />
-            <FormField register={register} errors={errors} name="url" label="URL:" placeholder="Enter URL" />
+            <FormField register={register} errors={errors} name="description" label="Descrição:" placeholder="Digite descrição" />
+            <FormField register={register} errors={errors} name="url" label="URL:" placeholder="Digite URL" />
             <FormFieldTags
                 value={tags}
                 onChange={(newTags) => setValue('tags', newTags)}
@@ -114,9 +129,9 @@ export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps
                 onClick={() => setAddIsOpen(false)}
                 className="px-4 py-2 rounded text-gray-600 hover:bg-gray-100"
               >
-                Cancel
+                Cancelar
               </button>
-              <Button type="submit" mainText="Add" showText={true} isSubmitting={isSubmitting} />
+              <Button type="submit" mainText="Adicionar" showText={true} isSubmitting={isSubmitting} />
             </div>
           </form>
 
@@ -125,4 +140,10 @@ export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps
       
     </Dialog>
   );
+
+  function sparkleAI() {
+    return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+    </svg>;
+  }
 }

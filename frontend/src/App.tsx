@@ -26,9 +26,9 @@ function App() {
       <div className="py-0 font-bold text-4xl">
                 Material Educacional
       </div>
-      <PaginatedMaterials materials={materials} onDelete={deleteMaterial} onEdit={setEditingMaterial} />;
+      <PaginatedMaterials materials={materials} onDelete={deleteMaterial} onEdit={setEditingMaterial}/>
       {/* Botão que abre o popup */}
-      <Button mainText="Adicionar Material Educacional" showText={true} onClick={() => setAddIsOpen(true)} />
+      <button onClick={() => setAddIsOpen(true)} className="bg-blue-300 hover:bg-slate-400 text-slate-800 hover:text-slate-900 py-2 px-4 rounded" >Adicionar Conteúdo</button>
     </>
 
   };
@@ -36,7 +36,7 @@ function App() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br bg-slate-700 dark:bg-cyan-950">
       
-      <div className="flex-col place-items-center flex justify-center bg-slate-200 px-10 lg:py-15 shadow-xl h-screen w-2xl mx-40">
+      <div className="flex-col place-items-center flex justify-top bg-slate-200 px-10 lg:py-15 shadow-xl h-screen w-2xl mx-40">
 
         {renderContent()}
 

@@ -10,7 +10,7 @@ interface FormSelectProps {
 
 export function FormSelect({ register, errors, name, label, options }: FormSelectProps) {
   return (
-    <div className="w-full py-4">
+    <div className="w-full py-1">
       <p className="pb-1 text-xl text-gray-800">{label}</p>
       <select
         {...register(name)}

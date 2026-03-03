@@ -62,20 +62,20 @@ export function PopupEdit({ material, onClose, editMaterial }: PopupEditProps) {
           <DialogTitle className="font-bold text-2xl">Edit Material</DialogTitle>
 
           <form onSubmit={handleSubmit(onSubmit, (errs) => console.log("Validation errors:", errs))}>
-            <FormField register={register} errors={errors} name="title" label="Title:" placeholder="Enter title" />
+            <FormField register={register} errors={errors} name="title" label="Título:" placeholder="Digite título" />
             <FormSelect
               register={register}
               errors={errors}
               name="type"
-              label="Type:"
+              label="Tipo:"
               options={[
                 { value: "Vídeo", label: "Vídeo" },
                 { value: "PDF", label: "PDF" },
                 { value: "Link", label: "Link" },
               ]}
             />
-            <FormField register={register} errors={errors} name="description" label="Description:" placeholder="Enter description" />
-            <FormField register={register} errors={errors} name="url" label="URL:" placeholder="Enter URL" />
+            <FormField register={register} errors={errors} name="description" label="Descrição:" placeholder="Digite descrição" />
+            <FormField register={register} errors={errors} name="url" label="URL:" placeholder="Digite URL" />
             <FormFieldTags
                 value={tags}
                 onChange={(newTags) => setValue('tags', newTags)}
@@ -89,9 +89,9 @@ export function PopupEdit({ material, onClose, editMaterial }: PopupEditProps) {
                 onClick={() => onClose()}
                 className="px-4 py-2 rounded text-gray-600 hover:bg-gray-100"
               >
-                Cancel
+                Cancelar
               </button>
-              <Button type="submit" mainText="Edit" showText={true} isSubmitting={isSubmitting} />
+              <Button type="submit" mainText="Editar" showText={true} isSubmitting={isSubmitting} />
             </div>
           </form>
 
