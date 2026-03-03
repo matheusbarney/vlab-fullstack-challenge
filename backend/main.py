@@ -116,9 +116,8 @@ def get_all_material(db: Session = Depends(get_db)):
     return db.query(Material).all()
 
 
-@app.post("/ai", response_model=AIResponse)
+@app.post("/ai")  # remova o response_model=AIResponse
 async def use_ai(request: AIRequest):
-    response_text = ai_platform.chat(
+    return ai_platform.chat(
         prompt_title=request.prompt_title, prompt_type=request.prompt_type
     )
-    return AIResponse(response=response_text)

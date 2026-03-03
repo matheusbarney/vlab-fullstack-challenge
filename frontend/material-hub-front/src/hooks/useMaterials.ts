@@ -1,6 +1,6 @@
 
 import { materialService } from '../services/materialService';
-import type { MaterialInput } from '../services/materialService';
+import type { MaterialInput, AIGeneratedContent } from '../services/materialService';
 import{ useEffect, useState } from 'react';
 import type { Material } from "../types/material";
 
@@ -74,7 +74,22 @@ export const useMaterials = () => {
         }
     };
 
-    return { materials, loading, error, deleteMaterial, editMaterial, addMaterial };
+    const generateAIContent = async (title: string, type: string): Promise<AIGeneratedContent | null> => {
+        try {
+            setLoading(true);
+            setError(null);
+            const content = await materialService.generateAIContent(title, type);
+            return content;
+        } catch (err) {
+            console.error('Error generating AI content:', err);
+            setError(err instanceof Error ? err : new Error(String(err)));
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { materials, loading, error, deleteMaterial, editMaterial, addMaterial, generateAIContent };
 };
 
 export default useMaterials;

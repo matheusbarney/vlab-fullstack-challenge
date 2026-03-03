@@ -10,6 +10,11 @@ export interface MaterialInput {
     tags?: string[];
 }
 
+export interface AIGeneratedContent {
+    description: string;
+    tags: string[];
+}
+
 export const materialService = {
     getAll: async () => {
         const res = await api.get<Material[]>("/materials");
@@ -37,10 +42,10 @@ export const materialService = {
     },
 
     generateAIContent: async (title: string, type: string) => {
-        const res = await api.post<{ response: string }>('/ai', {
+        const res = await api.post<AIGeneratedContent>('/ai', {
             prompt_title: title,
             prompt_type: type
         });
-        return res.data.response;
+        return res.data;
     }
 }

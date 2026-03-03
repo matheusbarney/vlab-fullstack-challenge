@@ -1,3 +1,5 @@
+import json
+
 from ai.base import AIModel
 from pathlib import Path
 import google.genai as genai
@@ -11,11 +13,13 @@ class GeminiFlash(AIModel):
         self.system_prompt_template = SYSTEM_PROMPT_PATH.read_text(encoding="utf-8")
         self.client = genai.Client(api_key=self.api_key)
 
-    def chat(self, prompt_title: str, prompt_type: str) -> str:
+    def chat(self, prompt_title: str, prompt_type: str) -> dict:
         prompt = self.system_prompt_template.format(
             titulo=prompt_title, tipo=prompt_type
         )
         response = self.client.models.generate_content(
             model="gemini-3-flash-preview", contents=prompt
         )
-        return response.text
+
+        text = response.text.strip().removeprefix("```json").removesuffix("```").strip()
+        return json.loads(text)

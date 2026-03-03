@@ -61,8 +61,6 @@ export function PopupEdit({ material, onClose, editMaterial }: PopupEditProps) {
 
           <form onSubmit={handleSubmit(onSubmit, (errs) => console.log("Validation errors:", errs))}>
             <FormField register={register} errors={errors} name="title" label="Title:" placeholder="Enter title" />
-            <FormField register={register} errors={errors} name="description" label="Description:" placeholder="Enter description" />
-            <FormField register={register} errors={errors} name="url" label="URL:" placeholder="Enter URL" />
             <FormSelect
               register={register}
               errors={errors}
@@ -74,6 +72,8 @@ export function PopupEdit({ material, onClose, editMaterial }: PopupEditProps) {
                 { value: "Link", label: "Link" },
               ]}
             />
+            <FormField register={register} errors={errors} name="description" label="Description:" placeholder="Enter description" />
+            <FormField register={register} errors={errors} name="url" label="URL:" placeholder="Enter URL" />
             <FormFieldTags
                 value={tags}
                 onChange={(newTags) => setValue('tags', newTags)}
