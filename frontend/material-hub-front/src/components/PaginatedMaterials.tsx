@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { MaterialItems } from './MaterialItems';
 import ReactPaginate from 'react-paginate';
+import type { Material } from '../types/material';
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 4;
 
-export function PaginatedMaterials({ materials, onDelete }: { 
-  materials: { id: string; title: string; description: string }[]; 
+export function PaginatedMaterials({ materials, onDelete, onEdit }: { 
+  materials: Material[]; 
   onDelete: (id: string) => Promise<void>;
+  onEdit: (material: Material) => void;
 }) {
   const [itemOffset, setItemOffset] = useState(0);
 
@@ -22,7 +24,7 @@ export function PaginatedMaterials({ materials, onDelete }: {
   return (
     <>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1 gap-2 md:gap-4 py-4 w-xl">
-        <MaterialItems currentItems={currentItems} onDelete={onDelete} />
+        <MaterialItems currentItems={currentItems} onDelete={onDelete} onEdit={onEdit}/>
       </ul>
       <ReactPaginate
         breakLabel="..."

@@ -74,7 +74,7 @@ export const useMaterials = () => {
         }
     };
 
-    return { materials, loading, error, deleteMaterial };
+    return { materials, loading, error, deleteMaterial, editMaterial, addMaterial };
 };
 
 export default useMaterials;
