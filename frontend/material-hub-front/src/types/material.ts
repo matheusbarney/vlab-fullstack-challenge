@@ -1,5 +1,5 @@
 export interface Material {
-    id: number;
+    id: string;
     title: string;
     description: string;
     type: "Vídeo" | "PDF" | "Link";
