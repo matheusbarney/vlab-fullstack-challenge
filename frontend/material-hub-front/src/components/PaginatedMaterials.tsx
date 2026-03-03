@@ -3,7 +3,7 @@ import { MaterialItems } from './MaterialItems';
 import ReactPaginate from 'react-paginate';
 import type { Material } from '../types/material';
 
-const ITEMS_PER_PAGE = 4;
+const ITEMS_PER_PAGE = 3;
 
 export function PaginatedMaterials({ materials, onDelete, onEdit }: { 
   materials: Material[]; 

@@ -7,6 +7,8 @@ import { FormField } from './molecules/FormField';
 import { FormSelect } from './molecules/FormSelect';
 import { FormFieldTags } from './molecules/FormFieldTags';
 import Button from './atoms/Button';
+import { useState } from 'react';
+import { useMaterials } from '../hooks/useMaterials';
 
 const schema = z.object({
   title: z.string().min(1, "Title is required."),
@@ -32,6 +34,28 @@ export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps
     defaultValues: { tags: [] }, // importante!
   });
   const tags = useWatch({ control, name: 'tags' }) ?? [];
+  
+  const { generateAIContent } = useMaterials();
+  const [isGenerating, setIsGenerating] = useState(false);
+  const title = useWatch({ control, name: 'title' });
+  const type = useWatch({ control, name: 'type' });
+  const canUseAI = !!(title?.trim() && type);
+
+  const handleAIHelp = async () => {
+    if (!canUseAI) return;
+    try {
+      setIsGenerating(true);
+      const content = await generateAIContent(title, type);
+      if (content) {
+        setValue('description', content.description, { shouldValidate: true });
+        setValue('tags', content.tags, { shouldValidate: true });
+      }
+    } catch {
+      setError("root", { message: 'Failed to generate AI content.' });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
@@ -49,8 +73,15 @@ export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-slate-900/70">
 
         <DialogPanel className="max-w-2xl w-full space-y-4 border border-6 border-slate-200 rounded-4xl bg-white p-6 text-slate-900">
-          
-          <DialogTitle className="font-bold text-2xl">Add Material</DialogTitle>
+          <div className="flex items-center justify-between">
+            <DialogTitle className="font-bold text-2xl">Adicionar Material Educacional</DialogTitle>
+            <button 
+              onClick={handleAIHelp} 
+              disabled={!canUseAI || isGenerating}
+            >
+              {isGenerating ? "Gerando..." : "AI Help"}
+            </button>
+          </div>
 
           <form onSubmit={handleSubmit(onSubmit, (errs) => console.log("Validation errors:", errs))}>
             <FormField register={register} errors={errors} name="title" label="Title:" placeholder="Enter title" />
