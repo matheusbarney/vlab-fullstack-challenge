@@ -44,10 +44,11 @@ export function PopupEdit({ material, onClose, editMaterial }: PopupEditProps) {
     try {
       const response = await editMaterial(material!.id, data); // id comes from here
       console.log("Material edited!", response);
+      toast.success('Material edited successfully!');
       reset();
       onClose();
     } catch (error) {
-      toast.error('Something went wrong.');
+      toast.error('Failed to edit material.');
     }
   };
 

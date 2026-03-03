@@ -62,6 +62,7 @@ export function PopupAdd({ addIsOpen, setAddIsOpen, addMaterial }: PopupAddProps
     try {
       const response = await addMaterial(data);
       console.log("Material added!", response);
+      toast.success('Material added successfully!');
       reset();           // limpa o form após sucesso
       setAddIsOpen(false); // fecha o popup após sucesso
     } catch (error) {
