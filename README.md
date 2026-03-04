@@ -1,4 +1,6 @@
 # vlab-fullstack
+![Ow5iIDk](https://github.com/user-attachments/assets/dd3cdf6d-fa03-4183-9fdd-0cf416f61e74)
+
 ## Desafio Técnico: Hub Inteligente de Recursos
 Projeto desenvolvido para Desafio Técnico para dev Fullstack no V-Lab, onde foi desenvolvido uma aplicação Fullstack para gerenciamento de materiais didáticos. O sistema deve permitir o cadastro de recursos e utilizar Inteligência
 Artificial para auxiliar o usuário no preenchimento de informações.
