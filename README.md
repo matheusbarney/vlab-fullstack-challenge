@@ -17,6 +17,7 @@ Artificial para auxiliar o usuário no preenchimento de informações.
 - Visualize tabela de material paginada com react-paginate
 - Adicione ou edite material em um pop-up, com validação usando Zod. 
 - No mesmo card de edição, exclua material.
+- Uso de react-spinner e react-toastify para feedback nos loading states e erros nas consultas.
 - Após preencher título e tipo de novo material, aperte em botão de assistência IA para automáticamente preencher informações de descrição e 3 tags com retorno de consulta a API do Gemini.
 - App possúi integração contínua com pipeline no Github Actions que roda flake8 como linter para Backend, a cada Push ou PR.
 ## Como rodar
