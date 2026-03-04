@@ -11,7 +11,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from ai.gemini_flash import GeminiFlash
-from schemas import AIRequest, AIResponse, MaterialCreate, MaterialResponse
+from schemas import AIRequest, MaterialCreate, MaterialResponse
 
 import models
 
@@ -140,7 +140,7 @@ def get_all_material(db: Session = Depends(get_db)):
     return db.query(Material).all()
 
 
-@app.post("/ai")  # remova o response_model=AIResponse
+@app.post("/ai")
 async def use_ai(request: AIRequest):
     return ai_platform.chat(
         prompt_title=request.prompt_title, prompt_type=request.prompt_type
