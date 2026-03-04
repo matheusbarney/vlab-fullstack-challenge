@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import engine, get_db
 from models import Material, MaterialTag
 
+from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from ai.gemini_flash import GeminiFlash
@@ -40,6 +41,29 @@ ai_platform = GeminiFlash(api_key=gemini_api_key)
 @app.get("/")
 def read_root():
     return {"message": "API is running"}
+
+
+# Health
+@app.get("/health")
+def health_check(db: Session = Depends(get_db)):
+    health_status = {
+        "status": "healthy",
+        "service": "Educational Material API",
+        "database": "disconnected",
+    }
+
+    try:
+        # Tenta executar uma operação simples no MySQL
+        db.execute(text("SELECT 1"))
+        health_status["database"] = "connected"
+    except Exception as e:
+        # Se falhar, mudamos o status geral para "unhealthy"
+        health_status["status"] = "unhealthy"
+        health_status["database"] = f"error: {str(e)}"
+
+        raise HTTPException(status_code=503, detail=health_status)
+
+    return health_status
 
 
 # Create

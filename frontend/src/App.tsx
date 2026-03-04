@@ -5,7 +5,6 @@ import { PopupEdit } from './components/PopupEdit';
 import './App.css'
 import { useMaterials } from './hooks/useMaterials';
 import { PaginatedMaterials } from './components/PaginatedMaterials';
-import Button from './components/atoms/Button';
 import type { Material } from './types/material';
 import { toast } from 'react-toastify';
 
@@ -21,12 +20,12 @@ function App() {
 
   const renderContent = () => {
     if (loading) return <RotateLoader color="#363636" />;
-    if (materials.length === 0) return <p>Material Indisponível</p>;
     return <>
       <div className="py-0 font-bold text-4xl">
                 Material Educacional
       </div>
-      <PaginatedMaterials materials={materials} onDelete={deleteMaterial} onEdit={setEditingMaterial}/>
+      {materials.length === 0 ? <span className='py-12 font-bold'>Material Indisponível</span> 
+      : <PaginatedMaterials materials={materials} onDelete={deleteMaterial} onEdit={setEditingMaterial}/> }
       {/* Botão que abre o popup */}
       <button onClick={() => setAddIsOpen(true)} className="bg-blue-300 hover:bg-slate-400 text-slate-800 hover:text-slate-900 py-2 px-4 rounded" >Adicionar Conteúdo</button>
     </>

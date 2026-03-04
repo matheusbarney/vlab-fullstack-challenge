@@ -19,7 +19,7 @@ export const useMaterials = () => {
                 setError(null);
             } catch (err) {
                 console.error('Error loading materials:', err);
-                toast.error('Error loading materials');
+                toast.error('Erro carregando materials');
                 throw err;
             } finally {
                 setLoading(false);
@@ -36,10 +36,9 @@ export const useMaterials = () => {
             const newMaterial = await materialService.addMaterial(data);
             setMaterials(prev => [...prev, newMaterial]);
             return newMaterial;
-            toast.success('Material added successfully!');
         } catch (err) {
             console.error('Error adding material:', err);
-            toast.error('Error adding material');
+            toast.error('Erro ao adicionar material');
             throw err;
         } finally {
             setLoading(false);
@@ -53,10 +52,9 @@ export const useMaterials = () => {
             const updatedMaterial = await materialService.editMaterial(id, data);
             setMaterials(prev => prev.map(material => material.id === id ? updatedMaterial : material));
             return updatedMaterial;
-            toast.info('Material edited successfully.');
         } catch (err) {
             console.error('Error editing material:', err);
-            toast.error('Error editing material');
+            toast.error('Erro ao editar material');
             throw err;
         } finally {
             setLoading(false);
@@ -68,11 +66,11 @@ export const useMaterials = () => {
             setLoading(true);
             setError(null);
             await materialService.deleteById(id);
+            toast.info('Material deletado.');
             setMaterials(prev => prev.filter(material => material.id !== id));
-            toast.info('Deleted material.');
         } catch (err) {
             console.error('Error deleting material:', err);
-            toast.error('Error deleting material');
+            toast.error('Erro deletando material');
             throw err;
         } finally {
             setLoading(false);
@@ -84,11 +82,11 @@ export const useMaterials = () => {
             setLoading(true);
             setError(null);
             const content = await materialService.generateAIContent(title, type);
+            toast.info('Descrição e tags preenchidas usando IA!');
             return content;
-            toast.info('Filled in Description and tags using AI!');
         } catch (err) {
             console.error('Error generating AI content:', err);
-            toast.error('Error generating AI content');
+            toast.error('Erro ao gerar conteúdo IA');
             return null;
         } finally {
             setLoading(false);

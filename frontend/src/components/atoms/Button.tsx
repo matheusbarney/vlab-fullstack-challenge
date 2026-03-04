@@ -16,7 +16,7 @@ function Button({ type, icon, mainText, showText, isSubmitting, onClick }: Butto
             disabled:opacity-50 disabled:cursor-not-allowed w-xl sm:w-auto ">
       {showText && isSubmitting ? (
         <span className="text-neutral-100">
-          <RotateLoader color="#363636" />
+          <RotateLoader color="#ffffff" size={5} />
         </span>
       ) : (
         <div className="flex justify-center items-center gap-2 text-neutral-100">
