@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { MaterialItems } from './MaterialItems';
+import { MaterialItems } from '../atoms/MaterialItems';
 import ReactPaginate from 'react-paginate';
-import type { Material } from '../types/material';
+import type { Material } from '../../types/material';
 
 const ITEMS_PER_PAGE = 3;
 

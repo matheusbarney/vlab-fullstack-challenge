@@ -1,4 +1,4 @@
-import type { Material } from "../types/material";
+import type { Material } from "../../types/material";
 
 export function MaterialItems({ currentItems, onDelete, onEdit }: {
   currentItems: Material[];

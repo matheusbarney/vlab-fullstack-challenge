@@ -4,7 +4,7 @@ import { PopupAdd } from './components/PopupAdd';
 import { PopupEdit } from './components/PopupEdit';
 import './App.css'
 import { useMaterials } from './hooks/useMaterials';
-import { PaginatedMaterials } from './components/PaginatedMaterials';
+import { PaginatedMaterials } from './components/molecules/PaginatedMaterials';
 import type { Material } from './types/material';
 import { toast } from 'react-toastify';
 
